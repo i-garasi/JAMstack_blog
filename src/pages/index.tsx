@@ -26,6 +26,10 @@ const Home: NextPage<Props> = (props) => {
     setSearch(json);
   };
 
+  const handleClick: ComponentProps<"button">["onClick"] = () => {
+    setSearch(undefined);
+  };
+
   const contents = search ? search.contents : props.contents;
   const totalCount = search ? search.totalCount : props.totalCount;
 
@@ -35,6 +39,14 @@ const Home: NextPage<Props> = (props) => {
         <input type="text" name="query" />
         <button className="rounded bg-cyan-600 py-1 px-3 font-bold text-white hover:bg-cyan-700">
           検索
+        </button>
+
+        <button
+          type="reset"
+          className="rounded bg-gray-500 py-1 px-3 font-bold text-white hover:bg-gray-600"
+          onClick={handleClick}
+        >
+          リセット
         </button>
       </form>
 
