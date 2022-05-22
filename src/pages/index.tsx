@@ -1,7 +1,7 @@
 import { MicroCMSListResponse } from "microcms-js-sdk";
 import type { GetStaticProps, NextPage } from "next";
 import Link from "next/link";
-import { ComponentProps } from "react";
+import { ComponentProps, useState } from "react";
 import { client } from "src/libs/client";
 
 export type Blogs = {
@@ -12,6 +12,8 @@ export type Blogs = {
 type Props = MicroCMSListResponse<Blogs>;
 
 const Home: NextPage<Props> = (props) => {
+  const [search, setSearch] = useState<MicroCMSListResponse<Blogs>>();
+
   const handleSubmit: ComponentProps<"form">["onSubmit"] = async (e) => {
     e.preventDefault();
     const q = e.currentTarget.query.value;
@@ -20,9 +22,12 @@ const Home: NextPage<Props> = (props) => {
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({ q }),
     });
-    const json = await data.json();
-    console.log(json);
+    const json: MicroCMSListResponse<Blogs> = await data.json();
+    setSearch(json);
   };
+
+  const contents = search ? search.contents : props.contents;
+  const totalCount = search ? search.totalCount : props.totalCount;
 
   return (
     <div>
@@ -32,9 +37,11 @@ const Home: NextPage<Props> = (props) => {
           検索
         </button>
       </form>
-      <p className=" my-4 text-gray-400">{`記事の総数: ${props.totalCount}件`}</p>
+
+      <p className=" my-4 text-gray-400">{`記事の総数: ${totalCount}件`}</p>
+
       <ul className="space-y-4">
-        {props.contents.map((content) => {
+        {contents.map((content) => {
           return (
             <li key={content.id}>
               <Link href={`/blogs/${content.id}`}>
