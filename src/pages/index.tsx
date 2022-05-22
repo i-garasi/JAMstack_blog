@@ -15,6 +15,9 @@ const Home: NextPage<Props> = (props) => {
   const handleSubmit: ComponentProps<"form">["onSubmit"] = async (e) => {
     e.preventDefault();
     const q = e.currentTarget.query.value;
+    const data = await fetch("/api/search");
+    const json = await data.json();
+    console.log(json);
   };
 
   return (
