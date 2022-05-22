@@ -1,6 +1,7 @@
 import { MicroCMSListResponse } from "microcms-js-sdk";
 import type { GetStaticProps, NextPage } from "next";
 import Link from "next/link";
+import { ComponentProps } from "react";
 import { client } from "src/libs/client";
 
 export type Blogs = {
@@ -11,15 +12,26 @@ export type Blogs = {
 type Props = MicroCMSListResponse<Blogs>;
 
 const Home: NextPage<Props> = (props) => {
+  const handleSubmit: ComponentProps<"form">["onSubmit"] = async (e) => {
+    e.preventDefault();
+    const q = e.currentTarget.query.value;
+  };
+
   return (
     <div>
-      <p className="text-gray-400">{`記事の総数: ${props.totalCount}件`}</p>
-      <ul className="mt-4 space-y-4">
+      <form className="flex gap-x-2" onSubmit={handleSubmit}>
+        <input type="text" name="query" />
+        <button className="rounded bg-cyan-600 py-1 px-3 font-bold text-white hover:bg-cyan-700">
+          検索
+        </button>
+      </form>
+      <p className=" my-4 text-gray-400">{`記事の総数: ${props.totalCount}件`}</p>
+      <ul className="space-y-4">
         {props.contents.map((content) => {
           return (
             <li key={content.id}>
               <Link href={`/blogs/${content.id}`}>
-                <a className="text-lg text-cyan-600 underline hover:text-blue-300">
+                <a className="text-lg text-cyan-600 underline hover:text-cyan-700">
                   {content.title}
                 </a>
               </Link>
