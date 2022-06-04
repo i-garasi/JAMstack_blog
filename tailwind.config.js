@@ -1,4 +1,4 @@
-const mainColor = "#D4D4D4"
+const mainColor = "#D4D4D4";
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
@@ -23,6 +23,9 @@ module.exports = {
               color: mainColor,
             },
             strong: {
+              color: mainColor,
+            },
+            blockquote: {
               color: mainColor,
             },
           },
