@@ -7,6 +7,9 @@ module.exports = {
         DEFAULT: {
           css: {
             color: mainColor,
+            a: {
+              color: mainColor,
+            },
             h1: {
               color: mainColor,
             },
