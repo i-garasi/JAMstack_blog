@@ -1,3 +1,4 @@
+import { Box } from "@mantine/core";
 import { MicroCMSListResponse } from "microcms-js-sdk";
 import type { GetStaticProps, NextPage } from "next";
 import Link from "next/link";
@@ -34,7 +35,7 @@ const Home: NextPage<Props> = (props) => {
   const totalCount = search ? search.totalCount : props.totalCount;
 
   return (
-    <div>
+    <Box>
       <form className="flex gap-x-2" onSubmit={handleSubmit}>
         <input type="text" name="query" />
         <button className="rounded bg-cyan-600 py-1 px-3 font-bold text-white hover:bg-cyan-700">
@@ -65,7 +66,7 @@ const Home: NextPage<Props> = (props) => {
           );
         })}
       </ul>
-    </div>
+    </Box>
   );
 };
 
